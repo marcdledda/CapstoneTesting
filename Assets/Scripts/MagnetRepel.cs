@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnetAttract : MonoBehaviour {
+public class MagnetRepel : MonoBehaviour {
 
 	private bool inside;
 	[SerializeField]
@@ -41,7 +41,7 @@ public class MagnetAttract : MonoBehaviour {
 	void FixedUpdate(){
 		if (inside){
 			Vector3 magnetField = player.position - cube.position;
-			cubeRB.AddForce(force*magnetField);
+			cubeRB.AddForce(-force*magnetField);
 		}
 	}
 
