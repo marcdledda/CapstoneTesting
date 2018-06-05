@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DodgeWallState : MonoBehaviour {
 
@@ -10,14 +11,18 @@ public class DodgeWallState : MonoBehaviour {
 	[SerializeField]
 	private GameObject cubePrefab;
 	[SerializeField]
-	private int dodgeAmount;
+	private Text gameStateText;
+	public static int dodgeAmount;
 	private bool changePlat = false;
-	private bool spawnNext = true;
-	private bool cubeExist = false;
+	public static bool cubeExist;
+	public static bool gameStart;
 
 	// Use this for initialization
 	void Start () {
 		getWidth = OVRManager.boundary.GetDimensions(OVRBoundary.BoundaryType.PlayArea);
+		cubeExist = false;
+		dodgeAmount = 0;
+		gameStart = false;
 		if (getWidth.x < 2.1f){
 			platform.localScale = new Vector3(getWidth.x/10f, 1f, 1.5f);
 			changePlat = true;
@@ -26,7 +31,18 @@ public class DodgeWallState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (spawnNext && !cubeExist){
+		bool pressA = OVRInput.GetUp(OVRInput.Button.One);
+		if (pressA){
+			gameStart = true;
+			gameStateText.text = "Dodge the walls!";
+		}
+
+		if (dodgeAmount == 10) {
+			gameStart = false;
+			gameStateText.text = "You dodged all the walls!";
+		}
+
+		if (!cubeExist && gameStart){
 			if (changePlat){
 				float range = (getWidth.x/10f) * 5f - 0.25f;
 				float positionX = Random.Range(-range, range);
@@ -35,7 +51,6 @@ public class DodgeWallState : MonoBehaviour {
 
 				Instantiate(cubePrefab, objectPosition, Quaternion.identity);
 
-				spawnNext = false;
 				cubeExist = true;
 			} else {
 				float positionX = Random.Range(-0.75f, 0.75f);
@@ -44,7 +59,6 @@ public class DodgeWallState : MonoBehaviour {
 
 				Instantiate(cubePrefab, objectPosition, Quaternion.identity);
 
-				spawnNext = false;
 				cubeExist = true;
 			}
 		}
