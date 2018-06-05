@@ -20,10 +20,10 @@ public class HitPlayer : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == "Wall"){
-			Debug.Log("Got Hit");
-			// Destroy(other.gameObject);
-			// gameStateText.text = "You lose!";
-			// DodgeWallState.gameStart = false;			
+			Destroy(other.gameObject);
+			gameStateText.text = "You lose, Press A to Start Again!";
+			DodgeWallState.gameStart = false;
+			DodgeWallState.cubeExist = false;			
 		}
 	}
 }

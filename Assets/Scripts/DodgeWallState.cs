@@ -33,13 +33,15 @@ public class DodgeWallState : MonoBehaviour {
 	void Update () {
 		bool pressA = OVRInput.GetUp(OVRInput.Button.One);
 		if (pressA){
+			dodgeAmount = 0;
 			gameStart = true;
 			gameStateText.text = "Dodge the walls!";
 		}
 
-		if (dodgeAmount == 10) {
+		if (dodgeAmount == 20) {
 			gameStart = false;
-			gameStateText.text = "You dodged all the walls!";
+			gameStateText.text = "You dodged all the walls, Press A to try again!";
+			cubeExist = false;
 		}
 
 		if (!cubeExist && gameStart){
