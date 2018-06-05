@@ -11,7 +11,7 @@ public class DodgeWallState : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		getWidth = OVRManager.boundary.GetDimensions(OVRBoundary.BoundaryType.PlayArea);
-		platform.localScale = new Vector3(getWidth.x, 1f, 3f);
+		platform.localScale = new Vector3(getWidth.x/10f, 1f, 3f);
 	}
 	
 	// Update is called once per frame
