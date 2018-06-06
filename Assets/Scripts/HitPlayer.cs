@@ -21,6 +21,7 @@ public class HitPlayer : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == "Wall"){
 			Destroy(other.gameObject);
+			DodgeWallState.dodgeAmount = 0;
 			DodgeWallState.winner = false;
 			DodgeWallState.countdown = 5f;
 			DodgeWallState.gameStart = false;
