@@ -10,6 +10,8 @@ TagManager:
   - Easy
   - Med
   - Hard
+  - Platform
+  - buildBlock
   layers:
   - Default
   - TransparentFX
