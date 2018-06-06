@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class DodgeWallState : MonoBehaviour {
 
-	private Vector3 getWidth;
+	private Vector3 getSize;
 	[SerializeField]
 	private Transform platform;
 	[SerializeField]
 	private GameObject cubePrefab;
 	[SerializeField]
 	private Text gameStateText;
+	[SerializeField]
+	private Transform difficultPanel;
 	public static int dodgeAmount;
 	private bool changePlat = false;
 	public static bool cubeExist;
@@ -19,14 +21,16 @@ public class DodgeWallState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		getWidth = OVRManager.boundary.GetDimensions(OVRBoundary.BoundaryType.PlayArea);
+		getSize = OVRManager.boundary.GetDimensions(OVRBoundary.BoundaryType.PlayArea);
 		cubeExist = false;
 		dodgeAmount = 0;
 		gameStart = false;
-		if (getWidth.x < 2.1f){
-			platform.localScale = new Vector3(getWidth.x/10f, 1f, 1.5f);
+		if (getSize.x < 2.1f){
+			platform.localScale = new Vector3(getSize.x/10f, 1f, 1.5f);
 			changePlat = true;
 		}
+		float panelZ = -6.5f - 0.15f + (getSize.z/2f);
+		difficultPanel.position = new Vector3(0f, 1.7f, panelZ);
 	}
 	
 	// Update is called once per frame
@@ -46,7 +50,7 @@ public class DodgeWallState : MonoBehaviour {
 
 		if (!cubeExist && gameStart){
 			if (changePlat){
-				float range = (getWidth.x/10f) * 5f - 0.25f;
+				float range = (getSize.x/10f) * 5f - 0.25f;
 				float positionX = Random.Range(-range, range);
 
 				Vector3 objectPosition = new Vector3(positionX, 1.5f, 7f);
