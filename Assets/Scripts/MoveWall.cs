@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class MoveWall : MonoBehaviour {
 
-	[SerializeField]
-	float speed = 0.3f;
+	public static float speed;
 
 	// Use this for initialization
 	void Start () {

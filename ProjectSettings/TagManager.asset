@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
+  - LHand
+  - RHand
+  - Easy
+  - Med
+  - Hard
   layers:
   - Default
   - TransparentFX

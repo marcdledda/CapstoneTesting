@@ -14,10 +14,14 @@ public class DodgeWallState : MonoBehaviour {
 	private Text gameStateText;
 	[SerializeField]
 	private Transform difficultPanel;
+	[SerializeField]
+	private GameObject panelPrefab;
 	public static int dodgeAmount;
 	private bool changePlat = false;
 	public static bool cubeExist;
 	public static bool gameStart;
+	public static float countdown;
+	public static bool panelShow;
 
 	// Use this for initialization
 	void Start () {
@@ -31,21 +35,34 @@ public class DodgeWallState : MonoBehaviour {
 		}
 		float panelZ = -6.5f - 0.15f + (getSize.z/2f);
 		difficultPanel.position = new Vector3(0f, 1.7f, panelZ);
+		panelShow = true;
+		countdown = 5f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		bool pressA = OVRInput.GetUp(OVRInput.Button.One);
-		if (pressA){
+		if (panelShow){
+			gameStateText.text = "";
+			countdown = 5f;
 			dodgeAmount = 0;
-			gameStart = true;
-			gameStateText.text = "Dodge the walls!";
+		}else if (!panelShow) {
+			startTime();
+		}
+
+		bool pressA = OVRInput.GetUp(OVRInput.Button.One);
+		if (pressA && !gameStart && !cubeExist){
+			startTime();
 		}
 
 		if (dodgeAmount == 20) {
 			gameStart = false;
-			gameStateText.text = "You dodged all the walls, Press A to try again!";
 			cubeExist = false;
+			if (!panelShow){
+				float panelZ = -6.5f - 0.15f + (getSize.z/2f);
+				Vector3 panelPos = new Vector3(0f, 1.7f, panelZ);
+				Instantiate(panelPrefab, panelPos, Quaternion.identity);
+				panelShow = true;
+			}
 		}
 
 		if (!cubeExist && gameStart){
@@ -67,6 +84,16 @@ public class DodgeWallState : MonoBehaviour {
 
 				cubeExist = true;
 			}
+		}
+	}
+
+	private void startTime(){
+		if (countdown > 0f){
+			countdown -= Time.deltaTime;
+			gameStateText.text = "Starting in " + Mathf.Round(countdown) + "...";
+		} else if (0 == Mathf.Round(countdown) && !gameStart) {
+			gameStart = true;
+			gameStateText.text = "Dodge the walls!";
 		}
 	}
 }
