@@ -16,8 +16,9 @@ public class DodgeWallState : MonoBehaviour {
 	private Transform difficultPanel;
 	[SerializeField]
 	private GameObject panelPrefab;
-	public static int dodgeAmount;
 	private bool changePlat = false;
+	public static bool winner;
+	public static int dodgeAmount;
 	public static bool cubeExist;
 	public static bool gameStart;
 	public static float countdown;
@@ -37,12 +38,17 @@ public class DodgeWallState : MonoBehaviour {
 		difficultPanel.position = new Vector3(0f, 1.7f, panelZ);
 		panelShow = true;
 		countdown = 5f;
+		winner = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (panelShow){
-			gameStateText.text = "";
+			if (winner) {
+				gameStateText.text = "You dodged all the walls!";
+			} else {
+				gameStateText.text = "";
+			}
 			countdown = 5f;
 			dodgeAmount = 0;
 		}else if (!panelShow) {
@@ -55,6 +61,7 @@ public class DodgeWallState : MonoBehaviour {
 		}
 
 		if (dodgeAmount == 20) {
+			winner = true;
 			gameStart = false;
 			cubeExist = false;
 			if (!panelShow){

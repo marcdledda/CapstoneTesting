@@ -21,7 +21,7 @@ public class HitPlayer : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == "Wall"){
 			Destroy(other.gameObject);
-			gameStateText.text = "You lose, Press A to Start Again!";
+			DodgeWallState.winner = false;
 			DodgeWallState.countdown = 5f;
 			DodgeWallState.gameStart = false;
 			DodgeWallState.cubeExist = false;			
